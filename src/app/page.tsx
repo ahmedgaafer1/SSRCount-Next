@@ -1,20 +1,18 @@
-
 "use client";
 import { BasicButton } from "@/components/BasicButton";
 import Link from "next/link";
 import { ThemeProvider, useTheme } from "../providers/theme.provider";
 
-
 function ThemeToggleButton() {
   const { theme, setTheme } = useTheme();
   return (
-    <BasicButton btnColor={theme === 'light' ? 'gray' : 'black'}>
-      <button
-        onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-        style={{ width: '100%' }}
+    <BasicButton btnColor={theme === "light" ? "gray" : "black"}>
+      <span
+        onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+        style={{ width: "100%", cursor: "pointer", textAlign: "center" }}
       >
-        Switch to {theme === 'light' ? 'Dark' : 'Light'} Theme
-      </button>
+        Switch to {theme === "light" ? "Dark" : "Light"} Theme
+      </span>
     </BasicButton>
   );
 }
