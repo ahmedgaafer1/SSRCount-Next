@@ -1,0 +1,23 @@
+
+@import "tailwindcss";
+
+body.light {
+  background: #f5f5f5;
+  color: #222;
+}
+
+body.dark {
+  background: #222;
+  color: #f5f5f5;
+}
+
+/* Example: style buttons for dark mode */
+.dark button {
+  background: #333 !important;
+  color: #f5f5f5 !important;
+}
+.light button {
+  background: #eee !important;
+  color: #222 !important;
+}
+
