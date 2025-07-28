@@ -36,8 +36,41 @@
 "use server";
 
 export async function updateCounter(prevState: number, formData: FormData) {
-  const action = formData.get("action");
-  if (action === "increment") return prevState + 1;
-  if (action === "decrement") return prevState - 1;
-  return prevState;
+  const action = formData.get("action") as "increment" | "decrement";
+  const strategy = await updateCounterStrategy(action);
+  const results = await strategy(prevState);
+  console.log(results);
+  return results?.counter;
+}
+
+
+async function updateCounterStrategy(action: "increment" | "decrement") {
+  const route = action === "increment" ? "http://localhost:3000/api/increment" : "http://localhost:3000/api/decrement";
+  const strategy = {
+    increment: async (prevState: number): Promise<{ counter: number }> => {
+      const response = await fetch(route, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          counter: prevState,
+        }),
+      });
+      return await response.json();
+    },
+    decrement: async (prevState: number): Promise<{ counter: number }> => {
+      const response = await fetch(route, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          counter: prevState,
+        }),
+      });
+      return await response.json();
+    },
+  };
+  return strategy[action];
 }
